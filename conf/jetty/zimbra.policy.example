@@ -15,8 +15,8 @@ grant {
   permission javax.net.ssl.SSLPermission "*"; 
 
 //Jetty internals
-  permission java.io.FilePermission "${jetty.home}/-", "read";
-  permission java.io.FilePermission "${jetty.home}/work/-", "read,write,delete";
+  permission java.io.FilePermission "${jetty.base}/-", "read";
+  permission java.io.FilePermission "${jetty.base}/work/-", "read,write,delete";
   permission java.io.FilePermission "etc/-", "read";
   permission java.io.FilePermission "null", "read";
 
