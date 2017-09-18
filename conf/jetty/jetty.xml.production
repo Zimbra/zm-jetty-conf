@@ -122,7 +122,7 @@
 	%%comment VAR:zimbraMailLocalBind,<!--%% HTTPLOCALEND -->
     
 	<New id="zimbraSslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
-		<Set name="KeyStorePath"><SystemProperty name="jetty.home" default="." />/etc/keystore</Set>
+		<Set name="KeyStorePath"><SystemProperty name="jetty.base" default="." />/etc/keystore</Set>
 		<Set name="KeyStorePassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="KeyManagerPassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="EndpointIdentificationAlgorithm"></Set>
@@ -187,7 +187,7 @@
     <!-- user services connector, SSL with client certificate -->
     <!-- HTTPSCLIENTCERTBEGIN %%uncomment VAR:zimbraMailSSLClientCertMode,-->,Disabled%%
 	<New id="zimbraSslClientContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
-		<Set name="KeyStorePath"><SystemProperty name="jetty.home" default="." />/etc/keystore</Set>
+		<Set name="KeyStorePath"><SystemProperty name="jetty.base" default="." />/etc/keystore</Set>
 		<Set name="KeyStorePassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="KeyManagerPassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="TrustStorePath">@@client_ssl_truststore@@</Set>
@@ -657,11 +657,11 @@
     <!-- SERVICEWEBAPPBEGIN %%comment SERVICE:service,-->%%
     <New id="service" class="org.eclipse.jetty.webapp.WebAppContext">
       <Arg><Ref id="Contexts"/></Arg>
-      <Arg><SystemProperty name="jetty.home" default="."/>/webapps/service</Arg>
+      <Arg><SystemProperty name="jetty.base" default="."/>/webapps/service</Arg>
       <Arg>/service</Arg>
       <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
-      <Set name="defaultsDescriptor"><SystemProperty name="jetty.home" default="."/>/etc/webdefault.xml</Set>
-      <Set name="tempDirectory"><SystemProperty name="jetty.home" default="."/>/work/service</Set>
+      <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
+      <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/service</Set>
       <Set name="compactPath">true</Set>
       <Get name="errorHandler">
         <Call name="setShowStacks">
@@ -678,11 +678,11 @@
     <!-- ZIMBRAWEBAPPBEGIN %%comment SERVICE:zimbra,-->%%
     <New id="zimbra" class="org.eclipse.jetty.webapp.WebAppContext">
       <Arg><Ref id="Contexts"/></Arg>
-      <Arg><SystemProperty name="jetty.home" default="."/>/webapps/zimbra</Arg>
+      <Arg><SystemProperty name="jetty.base" default="."/>/webapps/zimbra</Arg>
       <Arg>%%zimbraMailURL%%</Arg>
       <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
-      <Set name="defaultsDescriptor"><SystemProperty name="jetty.home" default="."/>/etc/webdefault.xml</Set>
-      <Set name="tempDirectory"><SystemProperty name="jetty.home" default="."/>/work/zimbra</Set>
+      <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
+      <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimbra</Set>
       <Set name="persistTempDirectory">true</Set>
       <Set name="compactPath">true</Set>
       <Set name="throwUnavailableOnStartupException">true</Set>
@@ -708,11 +708,11 @@
     <!-- ZIMBRAADMINWEBAPPBEGIN %%comment SERVICE:zimbraAdmin,-->%%
     <New id="zimbraAdmin" class="org.eclipse.jetty.webapp.WebAppContext">
       <Arg><Ref id="Contexts"/></Arg>
-      <Arg><SystemProperty name="jetty.home" default="."/>/webapps/zimbraAdmin</Arg>
+      <Arg><SystemProperty name="jetty.base" default="."/>/webapps/zimbraAdmin</Arg>
       <Arg>%%zimbraAdminURL%%</Arg>
       <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
-      <Set name="defaultsDescriptor"><SystemProperty name="jetty.home" default="."/>/etc/webdefault.xml</Set>
-      <Set name="tempDirectory"><SystemProperty name="jetty.home" default="."/>/work/zimbraAdmin</Set>
+      <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
+      <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimbraAdmin</Set>
       <Set name="compactPath">true</Set>
       <Set name="throwUnavailableOnStartupException">true</Set>
       <Get name="errorHandler">
@@ -736,19 +736,19 @@
     
     <New id="zimlet" class="org.eclipse.jetty.webapp.WebAppContext">
       <Arg><Ref id="Contexts"/></Arg>
-      <Arg><SystemProperty name="jetty.home" default="."/>/webapps/zimlet</Arg>
+      <Arg><SystemProperty name="jetty.base" default="."/>/webapps/zimlet</Arg>
       <Arg>/zimlet</Arg>
       <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
-      <Set name="defaultsDescriptor"><SystemProperty name="jetty.home" default="."/>/etc/webdefault.xml</Set>
-      <Set name="tempDirectory"><SystemProperty name="jetty.home" default="."/>/work/zimlet</Set>
+      <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
+      <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimlet</Set>
       <Set name="compactPath">true</Set>
       <Set name="throwUnavailableOnStartupException">true</Set>
       <Set name="baseResource">
         <New class="org.eclipse.jetty.util.resource.ResourceCollection">
           <Arg>
             <Array type="String">
-              <Item><SystemProperty name="jetty.home" default="."/>/webapps/zimlet</Item>
-              <Item><SystemProperty name="jetty.home" default="."/>/../zimlets-deployed</Item>
+              <Item><SystemProperty name="jetty.base" default="."/>/webapps/zimlet</Item>
+              <Item><SystemProperty name="jetty.base" default="."/>/../zimlets-deployed</Item>
             </Array>
           </Arg>
         </New>
@@ -817,7 +817,7 @@
     <!-- Configure Authentication Realms                             -->
     <!-- Realms may be configured for the entire server here, or     -->
     <!-- they can be configured for a specific web app in a context  -->
-    <!-- configuration (see $(jetty.home)/contexts/test.xml for an   -->
+    <!-- configuration (see $(jetty.base)/contexts/test.xml for an   -->
     <!-- example).                                                   -->
     <!-- =========================================================== -->
 
@@ -826,7 +826,7 @@
        <Arg> 
           <New class="org.eclipse.jetty.security.SpnegoLoginService">
             <Set name="name">Spnego Authentication Realm</Set>
-            <Set name="config"><SystemProperty name="jetty.home" default="."/>/etc/spnego.properties</Set>
+            <Set name="config"><SystemProperty name="jetty.base" default="."/>/etc/spnego.properties</Set>
             <Set name="IdentityService">
                 <New class="org.eclipse.jetty.security.DefaultIdentityService"/>
             </Set>
@@ -857,13 +857,13 @@
     <!-- Configure Request Log                                       -->
     <!-- Request logs  may be configured for the entire server here, -->
     <!-- or they can be configured for a specific web app in a       -->
-    <!-- contexts configuration (see $(jetty.home)/contexts/test.xml -->
+    <!-- contexts configuration (see $(jetty.base)/contexts/test.xml -->
     <!-- for an example).                                            -->
     <!-- =========================================================== -->
     <Ref id="RequestLog">
       <Set name="requestLog">
         <New id="RequestLogImpl" class="org.eclipse.jetty.server.NCSARequestLog">
-          <Arg><SystemProperty name="jetty.home" default="."/>/../log/access_log.yyyy_mm_dd</Arg>
+          <Arg><SystemProperty name="jetty.base" default="."/>/../log/access_log.yyyy_mm_dd</Arg>
           <Set name="logDateFormat">dd/MMM/yyyy:HH:mm:ss Z</Set>
           <Set name="retainDays">30</Set>
           <Set name="append">true</Set>
@@ -906,7 +906,7 @@
         <Set name="handler"><Ref id="oldhandler"/></Set>
         <Set name="outputStream">
           <New class="org.eclipse.jetty.util.RolloverFileOutputStream">
-            <Arg type="String"><SystemProperty name="jetty.home" default="."/>/../log/trace_log.yyyy_mm_dd</Arg>
+            <Arg type="String"><SystemProperty name="jetty.base" default="."/>/../log/trace_log.yyyy_mm_dd</Arg>
             <Arg type="boolean">true</Arg>
             <Arg type="int">10</Arg>
           </New>
