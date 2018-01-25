@@ -350,16 +350,8 @@
 			</Call>
 			<Call name="addRule">
 				<Arg>
-					<New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
-						<Set name="pattern">/ews/Exchange.asmx/*</Set>
-						<Set name="replacement">/service/extension/zimbraews</Set>
-					</New>
-				</Arg>
-			</Call>
-			<Call name="addRule">
-				<Arg>
-					<New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
-						<Set name="pattern">/EWS/Exchange.asmx/*</Set>
+					<New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
+						<Set name="regex">(?i)/ews/Exchange.asmx/*</Set>
 						<Set name="replacement">/service/extension/zimbraews</Set>
 					</New>
 				</Arg>
