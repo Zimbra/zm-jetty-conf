@@ -583,7 +583,9 @@
 		<Set name="tempDirectory"><SystemProperty name="jetty.base" default="." />/work/service
 		</Set>
 		<Set name="compactPath">true</Set>
-  <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar</Set>
+    <Set name="extraClasspath">
+    /opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar
+    </Set>
 		<Call name="setAttribute">
 			<Arg>org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern</Arg>
 			<Arg>.*/.*jsp-api-[^/]*\.jar$|.*/.*jsp-[^/]*\.jar$|.*/.*taglibs[^/]*\.jar$</Arg>
@@ -606,7 +608,8 @@
 		</Set>
 		<Set name="persistTempDirectory">true</Set>
 		<Set name="compactPath">true</Set>
-  <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar</Set>
+    <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar
+    </Set>
 		<Get name="errorHandler">
 			<Call name="addErrorPage">
 				<Arg type="int">400</Arg>
@@ -640,7 +643,8 @@
 		<Set name="tempDirectory"><SystemProperty name="jetty.base" default="." />/work/zimbraAdmin
 		</Set>
 		<Set name="compactPath">true</Set>
-  <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar</Set>
+    <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar
+    </Set>
         <Get name="sessionHandler">
             <Get name="sessionManager">
                 <Set name="httpOnly">TRUE</Set>
