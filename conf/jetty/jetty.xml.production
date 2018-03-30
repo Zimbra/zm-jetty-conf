@@ -655,6 +655,7 @@
       <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
       <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/service</Set>
       <Set name="compactPath">true</Set>
+      <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar</Set>
       <Get name="errorHandler">
         <Call name="setShowStacks">
           <Arg type="boolean">false</Arg>
@@ -678,6 +679,7 @@
       <Set name="persistTempDirectory">true</Set>
       <Set name="compactPath">true</Set>
       <Set name="throwUnavailableOnStartupException">true</Set>
+      <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar</Set>
       <Get name="errorHandler">
         <Call name="addErrorPage">
           <Arg type="int">400</Arg>
@@ -707,6 +709,7 @@
       <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimbraAdmin</Set>
       <Set name="compactPath">true</Set>
       <Set name="throwUnavailableOnStartupException">true</Set>
+      <Set name="extraClasspath">/opt/zimbra/lib/jars/zimbrasoap.jar,/opt/zimbra/lib/jars/zimbraclient.jar,/opt/zimbra/lib/jars/zimbrastore.jar</Set>
       <Get name="errorHandler">
         <Call name="addErrorPage">
           <Arg type="int">500</Arg>
