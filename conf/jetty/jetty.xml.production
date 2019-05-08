@@ -688,9 +688,7 @@
         </Call>
       </Get>
       <Get name="sessionHandler">
-        <Get name="sessionManager">
-          <Set name="httpOnly">TRUE</Set>
-        </Get> 
+        <Get name="sessionIdManager"></Get> 
       </Get> 
       <Call name="setAttribute">
         <Arg>org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern</Arg>
@@ -718,9 +716,7 @@
         </Call>
       </Get>
       <Get name="sessionHandler">
-        <Get name="sessionManager">
-          <Set name="httpOnly">TRUE</Set>
-        </Get> 
+        <Get name="sessionIdManager"></Get> 
       </Get> 
       <Call name="setAttribute">
         <Arg>org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern</Arg>
@@ -766,13 +762,15 @@
               <Item>javax.</Item>
               <Item>org.xml.</Item>
               <Item>org.w3c.</Item>
-              <Item>org.apache.commons.logging.</Item>
+              <Item>org.eclipse.jetty.jmx.</Item>
+              <Item>org.eclipse.jetty.util.annotation.</Item>
               <Item>org.eclipse.jetty.continuation.</Item>
               <Item>org.eclipse.jetty.jndi.</Item>
-              <Item>org.eclipse.jetty.plus.jaas.</Item>
+              <Item>org.eclipse.jetty.jaas.</Item>
               <Item>org.eclipse.jetty.websocket.</Item>
-              <Item>org.eclipse.jetty.servlet.</Item>
-              <Item>org.eclipse.jetty.servlets.</Item>
+              <Item>org.eclipse.jetty.util.log.</Item>
+              <Item>org.eclipse.jetty.servlet.DefaultServlet</Item>
+              <Item>org.eclipse.jetty.jsp.JettyJspServlet</Item>
               <Item>org.eclipse.jetty.server.</Item>
               <Item>org.eclipse.jetty.io.</Item>
               <Item>org.eclipse.jetty.http.</Item>
@@ -786,11 +784,16 @@
         <Arg>org.eclipse.jetty.webapp.serverClasses</Arg>
         <Arg>
            <Array type="java.lang.String">
+              <Item>-org.eclipse.jetty.server.session.SessionData</Item>
+              <Item>-org.eclipse.jetty.jmx.</Item>
+              <Item>-org.eclipse.jetty.util.annotation</Item>
               <Item>-org.eclipse.jetty.continuation.</Item>
               <Item>-org.eclipse.jetty.jndi.</Item>
-              <Item>-org.eclipse.jetty.plus.jass.</Item>
+              <Item>-org.eclipse.jetty.jass.</Item>
               <Item>-org.eclipse.jetty.websocket.</Item>
-              <Item>-org.eclipse.jetty.servlet.</Item>
+              <Item>-org.eclipse.jetty.servlet.DefaultServlet</Item>
+              <Item>-org.eclipse.jetty.servlet.NoJspServlet</Item>
+              <Item>-org.eclipse.jetty.servlet.listener.</Item>
               <Item>-org.eclipse.jetty.servlets.</Item>
               <Item>-org.eclipse.jetty.server.</Item>
               <Item>-org.eclipse.jetty.io.</Item>
@@ -798,7 +801,12 @@
               <Item>-org.eclipse.jetty.security.</Item>
               <Item>-org.eclipse.jetty.util.</Item>
               <Item>-org.eclipse.jetty.apache.</Item>
+              <Item>-org.eclipse.jetty.jsp.</Item>
+              <Item>-org.eclipse.jetty.util.log.</Item>
+              <Item>-org.eclipse.jetty.alpn.</Item>
               <Item>org.eclipse.jetty.</Item>
+              <Item>org.objectweb.asm.</Item>
+              <Item>org.eclipse.jdt.</Item>
            </Array>    
         </Arg>
     </Call>
@@ -829,24 +837,6 @@
         </Arg>
     </Call>    
 	%%comment VAR:zimbraSpnegoAuthEnabled,<!--%% -->
-
-    <!-- THREADMONITORBEGIN %%comment VAR:zimbraThreadMonitorEnabled,-->%%
-	<Call name="addBean">
-		<Arg>
-			<New class="org.eclipse.jetty.monitor.ThreadMonitor">
-				<Set name="scanInterval">2000</Set>
-				<Set name="busyThreshold">90</Set>
-				<Set name="stackDepth">5</Set>
-				<Set name="trailLength">4</Set>
-				<Set name="logInterval">10000</Set>
-				<Set name="logThreshold">65</Set>
-				<Set name="dumpable">
-					<Ref id="Server" />
-				</Set>
-			</New>
-		</Arg>
-	</Call>
-	%%comment VAR:zimbraThreadMonitorEnabled,<!--%% THREADMONITOREND -->
 
     <!-- =========================================================== -->
     <!-- Configure Request Log                                       -->
