@@ -1,6 +1,6 @@
-# Mail Feature
-[description]
-Adds a specific implementaion of javax.mail API based on client to the classpath.
+# Mail Module
+#Adds a specific implementaion of javax.mail API based on client to the classpath.
+#
 
 [provides]
 mail
