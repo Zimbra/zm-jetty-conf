@@ -776,6 +776,8 @@
               <Item>org.eclipse.jetty.http.</Item>
               <Item>org.eclipse.jetty.security.</Item>
               <Item>org.eclipse.jetty.util.</Item>
+              <Item>org.eclipse.jetty.servlet.</Item>
+              <Item>org.eclipse.jetty.servlets.</Item>
            </Array>
         </Arg>
     </Call>
@@ -794,6 +796,7 @@
               <Item>-org.eclipse.jetty.servlet.DefaultServlet</Item>
               <Item>-org.eclipse.jetty.servlet.NoJspServlet</Item>
               <Item>-org.eclipse.jetty.servlet.listener.</Item>
+              <Item>-org.eclipse.jetty.servlet.</Item>
               <Item>-org.eclipse.jetty.servlets.</Item>
               <Item>-org.eclipse.jetty.server.</Item>
               <Item>-org.eclipse.jetty.io.</Item>
