@@ -517,7 +517,7 @@
 		    <Set name="replacement">/service/user</Set>
 		</New>
 	    </Arg>
-        </Call>  
+        </Call> 
         <Call name="addRule">
 	    <Arg>        
 		<New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
@@ -542,7 +542,7 @@
 		</New>
 	    </Arg>
         </Call>
-        <!-- 
+       	<!-- 
           Allow only certauth URL on the SSL client cert port.
           If the URl does not match the regex, return http 403.
           Put this rule after the legacy rules (addRewriteRule) so this rule
@@ -614,7 +614,72 @@
 		    <Set name="replacement">%%zimbraMailURL%%</Set>
 		</New>
 	    </Arg>
-        </Call>       
+        </Call>      
+
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">zimbrax/.*/bundle.*</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=86400,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">zimbrax/.*/.*(.chunk.*)</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">zimbrax/.*/fonts/*</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+        
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">zimbrax/.*/assets/*</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=2592000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <!-- 
+          Rewrites the routes to index.html for all the routes inside zimbrax folder
+          Does not rewrite for the ones who have lesser than 5 characters after the . character in the end (allows files such as .css, .js, .png, etc)
+        -->
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
+              <Set name="regex">\/zimbrax\/?((.*)[^.]{5})?$</Set>
+              <Set name="replacement">/zimbrax/index.html</Set>
+              <Set name="terminating">true</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <Call name="addRule">
+          <Arg>  
+            <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
+              <Set name="pattern">/favicon.ico</Set>
+              <Set name="replacement">/zimbrax/favicon.ico</Set>
+              <Set name="terminating">true</Set>
+            </New>
+          </Arg>
+        </Call>
+ 
         <Set name="handler">
           <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
             <Set name="handlers">
