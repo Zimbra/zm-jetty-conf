@@ -606,20 +606,11 @@
 		</New>
 	    </Arg>
         </Call>                               
-        <!-- assume all other requests handled by zimbra webapp -->
-        <Call name="addRule">
-	    <Arg>        
-		<New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
-		    <Set name="pattern">/*</Set>
-		    <Set name="replacement">%%zimbraMailURL%%</Set>
-		</New>
-	    </Arg>
-        </Call>      
-
+         
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">zimbrax/.*/bundle.*</Set>
+              <Set name="pattern">/zimbrax/.*/bundle.*</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=86400,public</Set>
             </New>
@@ -629,7 +620,7 @@
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">zimbrax/.*/.*(.chunk.*)</Set>
+              <Set name="pattern">/zimbrax/.*/.*(.chunk.*)</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=31536000,public</Set>
             </New>
@@ -639,17 +630,17 @@
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">zimbrax/.*/fonts/*</Set>
+              <Set name="pattern">/zimbrax/.*/fonts/*</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=31536000,public</Set>
             </New>
           </Arg>
         </Call>
-        
+
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">zimbrax/.*/assets/*</Set>
+              <Set name="pattern">/zimbrax/.*/assets/*</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=2592000,public</Set>
             </New>
@@ -664,21 +655,21 @@
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
               <Set name="regex">\/zimbrax\/?((.*)[^.]{5})?$</Set>
-              <Set name="replacement">/zimbrax/index.html</Set>
+              <Set name="replacement">%%zimbraMailURL%%/zimbrax/index.html</Set>
               <Set name="terminating">true</Set>
             </New>
           </Arg>
         </Call>
 
+		<!-- assume all other requests handled by zimbra webapp -->
         <Call name="addRule">
-          <Arg>  
-            <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
-              <Set name="pattern">/favicon.ico</Set>
-              <Set name="replacement">/zimbrax/favicon.ico</Set>
-              <Set name="terminating">true</Set>
-            </New>
-          </Arg>
-        </Call>
+	      <Arg>        
+		    <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
+		      <Set name="pattern">/*</Set>
+		      <Set name="replacement">%%zimbraMailURL%%</Set>
+		    </New>
+	      </Arg>
+        </Call>      
  
         <Set name="handler">
           <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
