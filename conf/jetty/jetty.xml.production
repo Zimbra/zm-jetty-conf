@@ -612,7 +612,7 @@
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
               <Set name="pattern">/zimbrax/.*/bundle.*</Set>
               <Set name="name">Cache-Control</Set>
-              <Set name="value">Max-Age=86400,public</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
             </New>
           </Arg>
         </Call>
@@ -642,19 +642,19 @@
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
               <Set name="pattern">/zimbrax/.*/assets/*</Set>
               <Set name="name">Cache-Control</Set>
-              <Set name="value">Max-Age=2592000,public</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
             </New>
           </Arg>
         </Call>
 
         <!-- 
           Rewrites the routes to index.html for all the routes inside zimbrax folder
-          Does not rewrite for the ones who have lesser than 5 characters after the . character in the end (allows files such as .css, .js, .png, etc)
+          Does not rewrite for the ones who have lesser than 6 characters after the . character in the end (allows files such as .css, .js, .png, .woff2 etc)
         -->
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
-              <Set name="regex">\/zimbrax\/?((.*)[^.]{5})?$</Set>
+              <Set name="regex">\/zimbrax\/?((.*)[^.]{6})?$</Set>
               <Set name="replacement">%%zimbraMailURL%%/zimbrax/index.html</Set>
               <Set name="terminating">true</Set>
             </New>
