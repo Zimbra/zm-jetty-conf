@@ -610,7 +610,7 @@
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">/zimbrax/.*/bundle.*</Set>
+              <Set name="pattern">/modern/.*/bundle.*</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=31536000,public</Set>
             </New>
@@ -620,7 +620,7 @@
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">/zimbrax/.*/.*(.chunk.*)</Set>
+              <Set name="pattern">/modern/.*/.*(.chunk.*)</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=31536000,public</Set>
             </New>
@@ -630,7 +630,7 @@
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">/zimbrax/.*/fonts/*</Set>
+              <Set name="pattern">/modern/.*/fonts/*</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=31536000,public</Set>
             </New>
@@ -640,7 +640,7 @@
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
-              <Set name="pattern">/zimbrax/.*/assets/*</Set>
+              <Set name="pattern">/modern/.*/assets/*</Set>
               <Set name="name">Cache-Control</Set>
               <Set name="value">Max-Age=31536000,public</Set>
             </New>
@@ -648,14 +648,14 @@
         </Call>
 
         <!-- 
-          Rewrites the routes to index.html for all the routes inside zimbrax folder
+          Rewrites the routes to index.html for all the routes inside modern folder
           Does not rewrite for the ones who have lesser than 6 characters after the . character in the end (allows files such as .css, .js, .png, .woff2 etc)
         -->
         <Call name="addRule">
           <Arg>
             <New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
-              <Set name="regex">\/zimbrax\/?((.*)[^.]{6})?$</Set>
-              <Set name="replacement">%%zimbraMailURL%%/zimbrax/index.html</Set>
+              <Set name="regex">\/modern\/?((.*)[^.]{6})?$</Set>
+              <Set name="replacement">%%zimbraMailURL%%/modern/index.html</Set>
               <Set name="terminating">true</Set>
             </New>
           </Arg>
