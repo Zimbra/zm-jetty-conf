@@ -517,7 +517,7 @@
 		    <Set name="replacement">/service/user</Set>
 		</New>
 	    </Arg>
-        </Call>  
+        </Call> 
         <Call name="addRule">
 	    <Arg>        
 		<New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
@@ -542,7 +542,7 @@
 		</New>
 	    </Arg>
         </Call>
-        <!-- 
+       	<!-- 
           Allow only certauth URL on the SSL client cert port.
           If the URl does not match the regex, return http 403.
           Put this rule after the legacy rules (addRewriteRule) so this rule
@@ -606,15 +606,71 @@
 		</New>
 	    </Arg>
         </Call>                               
-        <!-- assume all other requests handled by zimbra webapp -->
+         
         <Call name="addRule">
-	    <Arg>        
-		<New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
-		    <Set name="pattern">/*</Set>
-		    <Set name="replacement">%%zimbraMailURL%%</Set>
-		</New>
-	    </Arg>
-        </Call>       
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">/modern/.*/bundle.*</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">/modern/.*/.*(.chunk.*)</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">/modern/.*/fonts/*</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.HeaderPatternRule">
+              <Set name="pattern">/modern/.*/assets/*</Set>
+              <Set name="name">Cache-Control</Set>
+              <Set name="value">Max-Age=31536000,public</Set>
+            </New>
+          </Arg>
+        </Call>
+
+        <!-- 
+          Rewrites the routes to index.html for all the routes inside modern folder
+          Does not rewrite for the ones who have lesser than 6 characters after the . character in the end (allows files such as .css, .js, .png, .woff2 etc)
+        -->
+        <Call name="addRule">
+          <Arg>
+            <New class="org.eclipse.jetty.rewrite.handler.RewriteRegexRule">
+              <Set name="regex">\/modern\/?((.*)[^.]{6})?$</Set>
+              <Set name="replacement">%%zimbraMailURL%%/modern/index.html</Set>
+              <Set name="terminating">true</Set>
+            </New>
+          </Arg>
+        </Call>
+
+		<!-- assume all other requests handled by zimbra webapp -->
+        <Call name="addRule">
+	      <Arg>        
+		    <New class="org.eclipse.jetty.rewrite.handler.RewritePatternRule">
+		      <Set name="pattern">/*</Set>
+		      <Set name="replacement">%%zimbraMailURL%%</Set>
+		    </New>
+	      </Arg>
+        </Call>      
+ 
         <Set name="handler">
           <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
             <Set name="handlers">
@@ -776,6 +832,8 @@
               <Item>org.eclipse.jetty.http.</Item>
               <Item>org.eclipse.jetty.security.</Item>
               <Item>org.eclipse.jetty.util.</Item>
+              <Item>org.eclipse.jetty.servlet.</Item>
+              <Item>org.eclipse.jetty.servlets.</Item>
            </Array>
         </Arg>
     </Call>
@@ -794,6 +852,7 @@
               <Item>-org.eclipse.jetty.servlet.DefaultServlet</Item>
               <Item>-org.eclipse.jetty.servlet.NoJspServlet</Item>
               <Item>-org.eclipse.jetty.servlet.listener.</Item>
+              <Item>-org.eclipse.jetty.servlet.</Item>
               <Item>-org.eclipse.jetty.servlets.</Item>
               <Item>-org.eclipse.jetty.server.</Item>
               <Item>-org.eclipse.jetty.io.</Item>

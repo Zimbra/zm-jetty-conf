@@ -89,8 +89,6 @@
 		<Set name="IncludeProtocols">
 			<Array type="java.lang.String">
 				<!-- <Item>SSLv3</Item> -->
-				<Item>TLSv1</Item>
-				<Item>TLSv1.1</Item>
 				<Item>TLSv1.2</Item>
 			</Array>
 		</Set>
