@@ -61,20 +61,52 @@
   <!--                                                                      -->
   <!--   dirAllowed       If true, directory listings are returned if no    -->
   <!--                    welcome file is found. Else 403 Forbidden.        -->
+  <!--   welcomeServlets  If true, attempt to dispatch to welcome files     -->
+  <!--                    that are servlets, but only after no matching     -->
+  <!--                    static resources could be found. If false,        -->
+  <!--                    then a welcome file must exist on disk.           -->
+  <!--                    If "exact", then exact servlet matches            -->
+  <!--                    are supported without an existing file.           -->
+  <!--                    Default is false.                                 -->
+  <!--                                                                      -->
+  <!--                    This must be false if you want directory listings,-->
+  <!--                    but have index.jsp in your welcome file list.     -->
   <!--                                                                      -->
   <!--   redirectWelcome  If true, redirect welcome file requests           -->
   <!--                    else use request dispatcher forwards              -->
   <!--                                                                      -->
-  <!--   gzip             If set to true, then static content will be served--> 
-  <!--                    as gzip content encoded if a matching resource is -->
-  <!--                    found ending with ".gz"                           -->
+  <!--   gzip             If set to true, then static content will be served as -->
+  <!--                    gzip content encoded if a matching resource is    -->
+  <!--                    found ending with ".gz" (default false)           -->
+  <!--                    (deprecated: use precompressed)                   -->
+  <!--                                                                      -->
+  <!--   precompressed    If set to a comma separated list of encoding types-->
+  <!--                    (that may be listed in a requests Accept-Encoding -->
+  <!--                    header) to file extension mappings to look for    -->
+  <!--                    and serve. For example: "br=.br,gzip=.gz,bzip2=.bz". -->
+  <!--                    If set to a boolean True, then a default set of   -->
+  <!--                    compressed formats will be used, otherwise        -->
+  <!--                    no precompressed formats.                         -->
   <!--                                                                      -->
   <!--   resoureBase      Can be set to replace the context resource base   -->
+  <!--                                                                      -->
+  <!--   resourceCache    If set, this is a context attribute name,         -->
+  <!--                    which the servlet will use to look for a shared   -->
+  <!--                    ResourceCache instance.                           -->
   <!--                                                                      -->
   <!--   relativeResourceBase                                               -->
   <!--                    Set with a pathname relative to the base of the   -->
   <!--                    servlet context root. Useful for only serving     -->
   <!--                    static content from only specific subdirectories. -->
+  <!--                                                                      -->
+  <!--   pathInfoOnly     If true, only the path info will be applied       -->
+  <!--                    to the resourceBase                               -->
+  <!--                                                                      -->
+  <!--   stylesheet       Set with the location of an optional stylesheet   -->
+  <!--                    that will be used to decorate the directory       -->
+  <!--                    listing html.                                     -->
+  <!--                                                                      -->
+  <!--   etags             If True, weak etags will be generated and handled.-->
   <!--                                                                      -->
   <!--   useFileMappedBuffer                                                -->
   <!--                    If set to true (the default), a  memory mapped    -->
@@ -97,6 +129,12 @@
   <!--                    of resource cache. A bio cached buffer may be used-->
   <!--                    by nio but is not as efficient as a nio buffer.   -->
   <!--                    An nio cached buffer may not be used by bio.      -->
+  <!--  otherGzipFileExtensions                                              -->
+  <!--                    Other file extensions that signify that a file is -->
+  <!--                    already compressed. Eg ".svgz"                    -->
+  <!--                                                                      -->
+  <!--  encodingHeaderCacheSize                                             -->
+  <!--                    Max entries in a cache of ACCEPT-ENCODING headers.-->
   <!--                                                                      -->
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
   <servlet>
@@ -131,7 +169,7 @@
       <param-value>both</param-value>
     </init-param>
     <init-param>
-      <param-name>gzip</param-name>
+      <param-name>precompressed</param-name>
       <param-value>true</param-value>
     </init-param>
     <init-param>

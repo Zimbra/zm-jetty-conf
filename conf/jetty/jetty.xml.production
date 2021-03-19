@@ -939,6 +939,13 @@
             <Item>POST</Item>
           </Array>
         </Set>
+
+        <!-- Modern UI uses build time compression -->
+        <Set name="excludedPaths">
+          <Array type="String">
+            <Item>/modern/*</Item>
+          </Array>
+        </Set>
       </New>
     </Set>
     %%comment VAR:zimbraHttpCompressionEnabled,<!--%% HTTPCOMPRESSIONEND -->
