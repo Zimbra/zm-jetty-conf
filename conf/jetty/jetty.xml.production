@@ -330,7 +330,7 @@
                     </Array>
                 </Arg>
                 <Set name="host"></Set>
-                <Set name="port">7074</Set>
+                <Set name="port">%%zimbraDocumentEditingCallbackPort%%</Set>
                 <Set name="idleTimeout">60000</Set>
             </New>
         </Arg>
