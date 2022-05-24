@@ -121,7 +121,7 @@
 	</Call>
 	%%comment VAR:zimbraMailLocalBind,<!--%% HTTPLOCALEND -->
     
-	<New id="zimbraSslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
+	<New id="zimbraSslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Server">
 		<Set name="KeyStorePath"><SystemProperty name="jetty.base" default="." />/etc/keystore</Set>
 		<Set name="KeyStorePassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="KeyManagerPassword">@@mailboxd_keystore_password@@</Set>
@@ -186,7 +186,7 @@
 
     <!-- user services connector, SSL with client certificate -->
     <!-- HTTPSCLIENTCERTBEGIN %%uncomment VAR:zimbraMailSSLClientCertMode,-->,Disabled%%
-	<New id="zimbraSslClientContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
+	<New id="zimbraSslClientContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Client">
 		<Set name="KeyStorePath"><SystemProperty name="jetty.base" default="." />/etc/keystore</Set>
 		<Set name="KeyStorePassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="KeyManagerPassword">@@mailboxd_keystore_password@@</Set>
