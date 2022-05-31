@@ -826,8 +826,8 @@
         <New class="org.eclipse.jetty.util.resource.ResourceCollection">
           <Arg>
             <Array type="String">
-              <Item><SystemProperty name="jetty.base" default="."/>/webapps/zimlet</Item>
-              <Item><SystemProperty name="jetty.base" default="."/>/../zimlets-deployed</Item>
+              <Item><SystemProperty name="jetty.zimlet.base" default="."/>/webapps/zimlet</Item>
+              <Item><SystemProperty name="jetty.zimlet.base" default="."/>/../zimlets-deployed</Item>
             </Array>
           </Arg>
         </New>
