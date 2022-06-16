@@ -38,6 +38,7 @@
 			<Arg>
 				<New class="org.eclipse.jetty.server.ForwardedRequestCustomizer">
 					<Set name="forwardedForHeader">bogus</Set>
+					<Set name="forwardedPortAsAuthority">false</Set>
 				</New>
 			</Arg>
 		</Call>
