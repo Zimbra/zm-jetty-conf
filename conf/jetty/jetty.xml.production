@@ -38,6 +38,7 @@
 			<Arg>
 				<New class="org.eclipse.jetty.server.ForwardedRequestCustomizer">
 					<Set name="forwardedForHeader">bogus</Set>
+					<Set name="forwardedPortAsAuthority">false</Set>
 				</New>
 			</Arg>
 		</Call>
@@ -121,7 +122,7 @@
 	</Call>
 	%%comment VAR:zimbraMailLocalBind,<!--%% HTTPLOCALEND -->
     
-	<New id="zimbraSslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
+	<New id="zimbraSslContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Server">
 		<Set name="KeyStorePath"><SystemProperty name="jetty.base" default="." />/etc/keystore</Set>
 		<Set name="KeyStorePassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="KeyManagerPassword">@@mailboxd_keystore_password@@</Set>
@@ -186,7 +187,7 @@
 
     <!-- user services connector, SSL with client certificate -->
     <!-- HTTPSCLIENTCERTBEGIN %%uncomment VAR:zimbraMailSSLClientCertMode,-->,Disabled%%
-	<New id="zimbraSslClientContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory">
+	<New id="zimbraSslClientContextFactory" class="org.eclipse.jetty.util.ssl.SslContextFactory$Client">
 		<Set name="KeyStorePath"><SystemProperty name="jetty.base" default="." />/etc/keystore</Set>
 		<Set name="KeyStorePassword">@@mailboxd_keystore_password@@</Set>
 		<Set name="KeyManagerPassword">@@mailboxd_keystore_password@@</Set>
@@ -303,6 +304,38 @@
 			</New>
 		</Arg>
 	</Call>
+
+    <Call id="docServerHttpsConnector" name="addConnector">
+        <Arg>
+            <New id="docServer" class="org.eclipse.jetty.server.ServerConnector">
+                <Arg name="server">
+                    <Ref refid="Server" />
+                </Arg>
+                <Arg name="factories">
+                    <Array type="org.eclipse.jetty.server.ConnectionFactory">
+                        <Item>
+                            <New class="org.eclipse.jetty.server.SslConnectionFactory">
+                                <Arg name="next">http/1.1</Arg>
+                                <Arg name="sslContextFactory">
+                                    <Ref refid="zimbraSslContextFactory" />
+                                </Arg>
+                            </New>
+                        </Item>
+                        <Item>
+                            <New class="org.eclipse.jetty.server.HttpConnectionFactory">
+                                <Arg name="config">
+                                    <Ref refid="sslHttpConfig" />
+                                </Arg>
+                            </New>
+                        </Item>
+                    </Array>
+                </Arg>
+                <Set name="host"></Set>
+                <Set name="port">%%zimbraDocumentEditingCallbackPort%%</Set>
+                <Set name="idleTimeout">60000</Set>
+            </New>
+        </Arg>
+    </Call>
 
     <!-- ADMINLOCALBEGIN %%comment VAR:zimbraAdminLocalBind,-->%%
 	<Call id="adminLocalConnector" name="addConnector">
@@ -794,8 +827,8 @@
         <New class="org.eclipse.jetty.util.resource.ResourceCollection">
           <Arg>
             <Array type="String">
-              <Item><SystemProperty name="jetty.base" default="."/>/webapps/zimlet</Item>
-              <Item><SystemProperty name="jetty.base" default="."/>/../zimlets-deployed</Item>
+              <Item><SystemProperty name="jetty.zimlet.base" default="."/>/webapps/zimlet</Item>
+              <Item><SystemProperty name="jetty.zimlet.base" default="."/>/../zimlets-deployed</Item>
             </Array>
           </Arg>
         </New>
@@ -937,6 +970,13 @@
           <Array type="String">
             <Item>GET</Item>
             <Item>POST</Item>
+          </Array>
+        </Set>
+
+        <!-- Modern UI uses build time compression -->
+        <Set name="excludedPaths">
+          <Array type="String">
+            <Item>/modern/*</Item>
           </Array>
         </Set>
       </New>
