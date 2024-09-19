@@ -519,6 +519,10 @@
       <extension>dmg</extension>
       <mime-type>application/octet-stream</mime-type>
   </mime-mapping>
+  <mime-mapping>
+      <extension>mjs</extension>
+      <mime-type>application/x-javascript</mime-type>
+  </mime-mapping>
 
   <!-- ==================================================================== -->
   <welcome-file-list>
