@@ -23,7 +23,7 @@
 	</Get>
     
 	<Call class="com.zimbra.common.jetty.JettyMonitor" name="setThreadPool">
-		<Arg><Ref id="pool"/></Arg>
+		<Arg><Ref refid="pool"/></Arg>
 	</Call>
 
 	<New id="httpConfig" class="org.eclipse.jetty.server.HttpConfiguration">
@@ -705,7 +705,7 @@
         </Call>      
  
         <Set name="handler">
-          <New id="Handlers" class="org.eclipse.jetty.server.handler.HandlerCollection">
+          <New id="Handlers1" class="org.eclipse.jetty.server.handler.HandlerCollection">
             <Set name="handlers">
              <Array type="org.eclipse.jetty.server.Handler">
                <Item>
@@ -737,10 +737,10 @@
     
     <!-- SERVICEWEBAPPBEGIN %%comment SERVICE:service,-->%%
     <New id="service" class="org.eclipse.jetty.webapp.WebAppContext">
-      <Arg><Ref id="Contexts"/></Arg>
+      <Arg><Ref refid="Contexts"/></Arg>
       <Arg><SystemProperty name="jetty.base" default="."/>/webapps/service</Arg>
       <Arg>/service</Arg>
-      <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
+      <Set name="configurationClasses"><Ref refid="plusConfig"/></Set>
       <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
       <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/service</Set>
       <Set name="compactPath">true</Set>
@@ -759,10 +759,10 @@
     
     <!-- ZIMBRAWEBAPPBEGIN %%comment SERVICE:zimbra,-->%%
     <New id="zimbra" class="org.eclipse.jetty.webapp.WebAppContext">
-      <Arg><Ref id="Contexts"/></Arg>
+      <Arg><Ref refid="Contexts"/></Arg>
       <Arg><SystemProperty name="jetty.base" default="."/>/webapps/zimbra</Arg>
       <Arg>%%zimbraMailURL%%</Arg>
-      <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
+      <Set name="configurationClasses"><Ref refid="plusConfig"/></Set>
       <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
       <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimbra</Set>
       <Set name="persistTempDirectory">true</Set>
@@ -788,10 +788,10 @@
 
     <!-- ZIMBRAADMINWEBAPPBEGIN %%comment SERVICE:zimbraAdmin,-->%%
     <New id="zimbraAdmin" class="org.eclipse.jetty.webapp.WebAppContext">
-      <Arg><Ref id="Contexts"/></Arg>
+      <Arg><Ref refid="Contexts"/></Arg>
       <Arg><SystemProperty name="jetty.base" default="."/>/webapps/zimbraAdmin</Arg>
       <Arg>%%zimbraAdminURL%%</Arg>
-      <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
+      <Set name="configurationClasses"><Ref refid="plusConfig"/></Set>
       <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
       <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimbraAdmin</Set>
       <Set name="compactPath">true</Set>
@@ -815,10 +815,10 @@
     %%comment SERVICE:zimbraAdmin,<!--%% ZIMBRAADMINWEBAPPEND -->
     
     <New id="zimlet" class="org.eclipse.jetty.webapp.WebAppContext">
-      <Arg><Ref id="Contexts"/></Arg>
+      <Arg><Ref refid="Contexts"/></Arg>
       <Arg><SystemProperty name="jetty.base" default="."/>/webapps/zimlet</Arg>
       <Arg>/zimlet</Arg>
-      <Set name="configurationClasses"><Ref id="plusConfig"/></Set>
+      <Set name="configurationClasses"><Ref refid="plusConfig"/></Set>
       <Set name="defaultsDescriptor"><SystemProperty name="jetty.base" default="."/>/etc/webdefault.xml</Set>
       <Set name="tempDirectory"><SystemProperty name="jetty.base" default="."/>/work/zimlet</Set>
       <Set name="compactPath">true</Set>
@@ -937,7 +937,7 @@
     <!-- contexts configuration (see $(jetty.base)/contexts/test.xml -->
     <!-- for an example).                                            -->
     <!-- =========================================================== -->
-    <Ref id="RequestLog">
+    <Ref refid="RequestLog">
       <Set name="requestLog">
         <New id="RequestLogImpl" class="org.eclipse.jetty.server.NCSARequestLog">
           <Arg><SystemProperty name="jetty.base" default="."/>/../log/access_log.yyyy_mm_dd</Arg>
@@ -987,7 +987,7 @@
     <Get id="oldhandler" name="handler"/>
     <Set name="handler">
       <New id="DebugHandler" class="org.eclipse.jetty.server.handler.DebugHandler">
-        <Set name="handler"><Ref id="oldhandler"/></Set>
+        <Set name="handler"><Ref refid="oldhandler"/></Set>
         <Set name="outputStream">
           <New class="org.eclipse.jetty.util.RolloverFileOutputStream">
             <Arg type="String"><SystemProperty name="jetty.base" default="."/>/../log/trace_log.yyyy_mm_dd</Arg>
@@ -1009,34 +1009,34 @@
     <!-- =========================================================== -->
     
     <!-- HTTPBEGIN %%comment VAR:zimbraMailMode,-->,http,redirect,mixed,both%%
-    <Ref id="http">
+    <Ref refid="http">
       <Call name="open"/>
     </Ref>
     %%comment VAR:zimbraMailMode,<!--,http,redirect,mixed,both%% HTTPEND -->
     
 	<!-- HTTPLOCALBEGIN %%comment VAR:zimbraMailLocalBind,-->%%
-    <Ref id="http_local">
+    <Ref refid="http_local">
       <Call name="open"/>
     </Ref>
 	%%comment VAR:zimbraMailLocalBind,<!--%% HTTPLOCALEND -->
     
     <!-- HTTPSBEGIN %%comment VAR:zimbraMailMode,-->,https,redirect,mixed,both%%
-    <Ref id="ssl">
+    <Ref refid="ssl">
       <Call name="open"/>
     </Ref>
     %%comment VAR:zimbraMailMode,<!--,https,redirect,mixed,both%% HTTPSEND -->
     
     <!-- HTTPSCLIENTCERTBEGIN %%uncomment VAR:zimbraMailSSLClientCertMode,-->,Disabled%%
-    <Ref id="ssl-clientcert">
+    <Ref refid="ssl-clientcert">
       <Call name="open"/>
     </Ref>
     %%uncomment VAR:zimbraMailSSLClientCertMode,<!--,Disabled%% HTTPSCLIENTCERTEND -->
     
-    <Ref id="admin">
+    <Ref refid="admin">
       <Call name="open"/>
     </Ref>
     <!-- ADMINLOCALBEGIN %%comment VAR:zimbraAdminLocalBind,-->%%
-    <Ref id="admin_local">
+    <Ref refid="admin_local">
       <Call name="open"/>
     </Ref>
 	%%comment VAR:zimbraAdminLocalBind,<!--%% ADMINLOCALEND -->
